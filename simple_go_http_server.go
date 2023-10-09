@@ -53,6 +53,7 @@ func listValues(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var response listResponseMessage
+	response.Values = []int{}
 	for rows.Next() {
 		var value int
 		rows.Scan(&value)
@@ -94,6 +95,7 @@ func check_starting_error(err error) {
 func main() {
 	var err error
 	db, err = sql.Open("sqlite3", "sqlite3.db")
+	check_starting_error(err)
 	_, err = db.Exec("CREATE TABLE IF NOT EXISTS sample_table ( id INTEGER PRIMARY KEY AUTOINCREMENT, value INTEGER NOT NULL);")
 	check_starting_error(err)
 	list_stmt, err = db.Prepare("SELECT (value) FROM sample_table;")
@@ -104,7 +106,8 @@ func main() {
 	http.HandleFunc("/list", listValues)
 	http.HandleFunc("/push", pushValue)
 
-	err = http.ListenAndServe(":8080", nil)
+	fmt.Printf("starting server\n")
+	err = http.ListenAndServe(":8001", nil)
 	if errors.Is(err, http.ErrServerClosed) {
 		fmt.Printf("server closed\n")
 	} else {
