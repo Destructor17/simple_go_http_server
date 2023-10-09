@@ -1,20 +1,12 @@
 pipeline {
-    agent any
-
+    agent { label 'agent1' }
     stages {
         stage('Build') {
             steps {
                 echo 'Building..'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+                sh 'pwd'
+                sh 'go mod download && go mod verify'
+                sh 'go build -v -o app ./...'
             }
         }
     }
