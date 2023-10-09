@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM debian:latest
 
 COPY app /usr/local/bin/app
 
