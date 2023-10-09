@@ -7,4 +7,4 @@ FROM jenkins/ssh-agent:debian-jdk11
 
 # COPY . .
 RUN apt update
-RUN apt install -y golang
+RUN apt install -y golang docker

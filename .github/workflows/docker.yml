@@ -1,0 +1,21 @@
+name: docker image
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build_and_upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v2
+      
+    - name: Build image
+      run: |
+        docker build -t test_image:latest
+
+    - name: Upload image
+      uses: ishworkh/container-image-artifact-upload@v1.0.0
+      with:
+        image: "test_image:latest"
