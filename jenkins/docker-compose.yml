@@ -21,6 +21,17 @@ services:
     networks:
       - cicd_network
 
+  builder:
+    build:
+      context: ./
+      dockerfile: ./agent/Dockerfile
+    ports:
+      - "4422:22"
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQColZHETtVPuRyoveifIOzFuoaZhzn52oq8Cj9cbXP+f6CV3Bjggt+tfIUA9553wBMG8Oe0BugVJPCjY6nVRyMukboiPXGUZKLq5TuFFJWPvmjxpGai5cFWvurmIXumxCCLAEzxgmtCBOyVDDjagUVcfM3U/qecs4DsBdJlYg3Lg+8KM+TvREzgXDCJgdiqCnu56lZF6AMkab7o4CExKzvNnD8CshQiLnVAk9iqZ8A+siTchbg2Zf1I6ZI4i1TIwK/ScPewvM+dvMOqoHN/tvHTdgYRBK6tl83V3sT0W3EP7PHxjnnD/rqOH5reB0aSZYUxdDbwjK0fJ26V/u83deBtQOrkIrAbbvKEushmz8vYEQYiPLXe3ewifswNnPEoApLyKhioOQJOuMr2TMfvn5wRklD1W30aSUwzPWCj/b8awmlhl4NH2eqEpu0UuetQ/S+DBnA4qKJd8ocgjSL3IJ60oDgHgjg12yQ3ZiB43Iis0ZmZAKKck9v/WQTQJDQpQlM= artem@MacBook-Pro-Artem-2.local
+    networks:
+      - cicd_network
+
 volumes:
   jenkins_home:
     external: true
