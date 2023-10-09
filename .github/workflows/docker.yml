@@ -11,11 +11,18 @@ jobs:
     - name: Checkout project
       uses: actions/checkout@v2
       
+    - name: Build app
+      run: |
+        go mod download && go mod verify
+        go build -v -o app ./...
+
     - name: Build image
       run: |
-        docker build -t test_image:latest
+        docker build -t test_image:latest .
+        docker save test_image:latest > test_image.tar
 
-    - name: Upload image
-      uses: ishworkh/container-image-artifact-upload@v1.0.0
+    - uses: actions/upload-artifact@v3
       with:
-        image: "test_image:latest"
+        name: Docker_image
+        path: |
+          ./test_image.tar
